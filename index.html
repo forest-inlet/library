@@ -4,8 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DEMO PAGE</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./jquery-3.7.1.min.js"></script>
 </head>
 <body>
-    
+    <h1>This is DEMO PAGE</h1>
+
+    <div id="Popup">
+        <h2>Popup</h2>
+        <label>title: <input type="text" id="popupTitle"></label>
+        <label>body: <textarea id="popupBody"></textarea></label><br>
+        <label>title background color: <input type="text" id="titleBackgroundColor"></label>
+        <label>title size: <input type="text" id="titleSize"></label><br>
+        <label>body center-aligning: <input type="checkbox" id="bodyCenterAligning"></label><br>
+        <lavel>enter type:
+            <select id="enterTypeSelect">
+                <option value="0">0: Fade+Scale</option>
+                <option value="1">1: Slide from top</option>
+                <option value="2">2: Slide from bottom</option>
+                <option value="3">3: Slide from left</option>
+                <option value="4">4: Slide from right</option>
+            </select>
+        </lavel>
+        <label>leave type: 
+            <select id="leaveTypeSelect">
+                <option value="">same as enter</option>
+                <option value="0">0: Fade+Scale</option>
+                <option value="1">1: Slide from top</option>
+                <option value="2">2: Slide from bottom</option>
+                <option value="3">3: Slide from left</option>
+                <option value="4">4: Slide from right</option>
+            </select>
+        </label>
+        <button id="popup">popup</button>
+    </div>
+
+    <script type="module">
+        import * as FIL from './script.js';
+
+        $('#popup').on('click', function () {
+            const title = $('#popupTitle').val();
+            const body = $('#popupBody').val();
+            let enterType = $('#enterTypeSelect').val();
+            enterType = parseInt(enterType);
+            let leaveType = $('#leaveTypeSelect').val();
+            if (leaveType === "") leaveType = enterType; // 空なら enterType と同じ
+            else leaveType = parseInt(leaveType);
+
+            const titleBackgroundColor = $('#titleBackgroundColor').val() || undefined;
+            const titleSize = $('#titleSize').val() || undefined;
+            const bodyCenterAligning = $('#bodyCenterAligning').prop('checked');
+
+            FIL.createPopup(
+                { title, body },
+                enterType,
+                leaveType,
+                titleBackgroundColor,
+                titleSize,
+                bodyCenterAligning
+            );
+        });
+    </script>
 </body>
 </html>
