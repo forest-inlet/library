@@ -25,6 +25,8 @@ div#FILPopupArea {
     transform: scale(1);
     transition: all 0.4s ease;
     position: relative;
+    display: flex;
+    flex-direction: column;
 }
 div#FILPopupTitle {
     border-radius: 15px 15px 0 0;
@@ -33,6 +35,9 @@ div#FILPopupTitle {
 }
 div#FILPopupBody {
     padding: 5px;
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
 }
 div#FILPopupCloseBtn {
     position: absolute;
@@ -49,4 +54,23 @@ div#FILPopupCloseBtn {
 }
 div#FILPopupCloseBtn:hover {
     background-color: rgba(0, 0, 0, 0.2);
+}
+div#FILPopupConfirm {
+    padding: 5px;
+    border-radius: 0 0 15px 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+div#FILPopupConfirmTrueBtn,
+div#FILPopupConfirmFalseBtn {
+    display: inline-block;
+    min-width: 144px;
+    cursor: pointer;
+    font-size: 18px;
+    text-align: center;
+    border-radius: 16px;
+    margin: 10px;
+    padding: 6px;
 }

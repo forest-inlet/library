@@ -1,21 +1,33 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DEMO PAGE</title>
+    <style>
+        textarea {
+            width: 500px;
+            height: 60px;
+        }
+    </style>
     <link rel="stylesheet" href="./styles.css">
     <script src="./jquery-3.7.1.min.js"></script>
 </head>
+
 <body>
     <h1>This is DEMO PAGE</h1>
 
     <div id="Popup">
         <h2>Popup</h2>
-        <label>title: <input type="text" id="popupTitle"></label>
-        <label>body: <textarea id="popupBody"></textarea></label><br>
-        <label>title background color: <input type="text" id="titleBackgroundColor"></label>
-        <label>title size: <input type="text" id="titleSize"></label><br>
+        <label>title: <input type="text" id="popupTitle" placeholder="test"></label><br>
+        <label>body: <textarea id="popupBody" placeholder="this is a test"></textarea></label><br>
+        <label>title text color: <input type="text" id="titleTextColor" placeholder="#000"></label>
+        <label>body text color: <input type="text" id="bodyTextColor" placeholder="#000"></label><br>
+        <label>title background color: <input type="text" id="titleBackgroundColor" placeholder="#c4c4ff"></label>
+        <label>body background color: <input type="text" id="bodyBackgroundColor" placeholder="#fff"></label><br>
+        <label>title size: <input type="text" id="titleSize" placeholder="24px"></label>
+        <label>body size: <input type="text" id="bodySize" placeholder="16px"></label><br>
         <label>body center-aligning: <input type="checkbox" id="bodyCenterAligning"></label><br>
         <lavel>enter type:
             <select id="enterTypeSelect">
@@ -26,7 +38,7 @@
                 <option value="4">4: Slide from right</option>
             </select>
         </lavel>
-        <label>leave type: 
+        <label>leave type:
             <select id="leaveTypeSelect">
                 <option value="">same as enter</option>
                 <option value="0">0: Fade+Scale</option>
@@ -35,14 +47,25 @@
                 <option value="3">3: Slide from left</option>
                 <option value="4">4: Slide from right</option>
             </select>
-        </label>
+        </label><br>
+        <label>isConfirm: <input type="checkbox" id="isConfirm"></label><br>
+        <label>true text: <input type="text" id="trueText" placeholder="OK"></label>
+        <label>true text color: <input type="text" id="trueTextColor" placeholder="#fff"></label>
+        <label>true backgroundcolor: <input type="text" id="trueBackgroundColor" placeholder="#0078ff"></label><br>
+        <label>false text: <input type="text" id="falseText" placeholder="cancel"></label>
+        <label>false text color: <input type="text" id="falseTextColor" placeholder="#000"></label>
+        <label>false backgroundcolor: <input type="text" id="falseBackgroundColor" placeholder="#ccc"></label><br>
+        <label>onOpen function: <textarea id="onOpen" placeholder="el => {&#xA;console.log('opend', el);&#xA;}"></textarea></label><br>
+        <label>onClose function: <textarea id="onClose" placeholder="res => {&#xA;console.log('closed', res);&#xA;}"></textarea></label><br>
+        <label>onConfirm function: <textarea id="onConfirm" placeholder="() => {&#xA;console.log('trueBtn pressed');&#xA;}"></textarea></label><br>
+        <label>onCancel function: <textarea id="onCancel" placeholder="() => {&#xA;console.log('falseBtn pressed');&#xA;}"></textarea></label><br>
         <button id="popup">popup</button>
     </div>
 
     <script type="module">
         import * as FIL from './script.js';
 
-        $('#popup').on('click', function () {
+        $('#popup').on('click', async function () {
             const title = $('#popupTitle').val();
             const body = $('#popupBody').val();
             let enterType = $('#enterTypeSelect').val();
@@ -51,19 +74,166 @@
             if (leaveType === "") leaveType = enterType; // 空なら enterType と同じ
             else leaveType = parseInt(leaveType);
 
+            const titleTextColor = $('#titleTextColor').val() || undefined;
+            const bodyTextColor = $('#bodyTextColor').val() || undefined;
             const titleBackgroundColor = $('#titleBackgroundColor').val() || undefined;
+            const bodyBackgroundColor = $('#bodyBackgroundColor').val() || undefined;
             const titleSize = $('#titleSize').val() || undefined;
+            const bodySize = $('#bodySize').val() || undefined;
             const bodyCenterAligning = $('#bodyCenterAligning').prop('checked');
+            const isConfirm = $('#isConfirm').prop('checked');
+            const trueText = $('#trueText').val() || undefined;
+            const trueTextColor = $('#trueTextColor').val() || undefined;
+            const trueBackgroundColor = $('#trueBackgroundColor').val() || undefined;
+            const falseText = $('#falseText').val() || undefined;
+            const falseTextColor = $('#falseTextColor').val() || undefined;
+            const falseBackgroundColor = $('#falseBackgroundColor').val() || undefined;
+            const onOpen = eval($('#onOpen').val());
+            const onClose = eval($('#onClose').val());
+            const onConfirm = eval($('#onConfirm').val());
+            const onCancel = eval($('#onCancel').val());
 
-            FIL.createPopup(
-                { title, body },
-                enterType,
-                leaveType,
-                titleBackgroundColor,
-                titleSize,
-                bodyCenterAligning
+            console.log(
+                clean({
+                    text: title,
+                    textColor: titleTextColor,
+                    backgroundColor: titleBackgroundColor,
+                    size: titleSize
+                })
+            )
+            console.log(
+                clean({
+                    text: body,
+                    centerAligning: bodyCenterAligning,
+                    textColor: bodyTextColor,
+                    backgroundColor: bodyBackgroundColor,
+                    size: bodySize
+                })
+            )
+            console.log(
+                clean({
+                    enter: enterType,
+                    leave: leaveType
+                })
+            )
+            console.log(
+                cleanOptions({
+                    confirm: {
+                        isConfirm: isConfirm,
+                        true: {
+                            text: trueText,
+                            textColor: trueTextColor,
+                            backgroundColor: trueBackgroundColor
+                        },
+                        false: {
+                            text: falseText,
+                            textColor: falseTextColor,
+                            backgroundColor: falseBackgroundColor
+                        }
+                    },
+                    callbacks: {
+                        onOpen: onOpen,
+                        onClose: onClose,
+                        onConfirm: onConfirm,
+                        onCancel: onCancel
+                    }
+                })
+            )
+
+            let popupConfirm = await FIL.createPopup(
+                clean({
+                    text: title,
+                    backgroundColor: titleBackgroundColor,
+                    size: titleSize
+                }),
+                clean({
+                    text: body,
+                    centerAligning: bodyCenterAligning,
+                    backgroundColor: bodyBackgroundColor,
+                    size: bodySize
+                }),
+                clean({
+                    enter: enterType,
+                    leave: leaveType
+                }),
+                cleanOptions({
+                    confirm: {
+                        isConfirm: isConfirm,
+                        true: {
+                            text: trueText,
+                            textColor: trueTextColor,
+                            backgroundColor: trueBackgroundColor
+                        },
+                        false: {
+                            text: falseText,
+                            textColor: falseTextColor,
+                            backgroundColor: falseBackgroundColor
+                        }
+                    },
+                    callbacks: {
+                        onOpen: onOpen,
+                        onClose: onClose,
+                        onConfirm: onConfirm,
+                        onCancel: onCancel
+                    }
+                })
             );
-        });
+
+            console.log(`popupConfirm: ${popupConfirm}`);
+        })
+
+        function clean(obj) {
+            return Object.fromEntries(
+                Object.entries(obj).filter(([k, v]) => v !== undefined && v !== "")
+            );
+        }
+        function cleanOptions(option) {
+            const cleaned = {};
+
+            for (const [key, value] of Object.entries(option)) {
+
+                /* ▼ confirm 特別処理 ▼ */
+                if (key === "confirm") {
+                    const c = value;
+
+                    if (!c.isConfirm) {
+                        cleaned.confirm = { isConfirm: false };
+                        continue;
+                    }
+
+                    const trueClean = clean(c.true || {});
+                    const falseClean = clean(c.false || {});
+
+                    cleaned.confirm = {
+                        isConfirm: true,
+                        ...(Object.keys(trueClean).length ? { true: trueClean } : {}),
+                        ...(Object.keys(falseClean).length ? { false: falseClean } : {})
+                    };
+
+                    continue;
+                }
+
+                /* ▼ callbacks 特別処理 ▼ */
+                if (key === "callbacks") {
+                    const cb = value || {};
+                    const cleanedCallbacks = clean(cb); // undefined, "" を除去
+
+                    // 中身があれば追加、空なら callbacks ごと捨てる
+                    if (Object.keys(cleanedCallbacks).length) {
+                        cleaned.callbacks = cleanedCallbacks;
+                    }
+                    continue;
+                }
+
+                /* ▼ confirm / callbacks 以外 ▼ */
+                if (value !== undefined && value !== "") {
+                    cleaned[key] = value;
+                }
+            }
+
+            return cleaned;
+        }
     </script>
 </body>
+
 </html>
