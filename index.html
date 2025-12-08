@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DEMO PAGE</title>
     <style>
+        h2 {
+            display: inline-block;
+        }
         textarea {
             width: 500px;
             height: 60px;
@@ -18,28 +21,29 @@
 <body>
     <h1>This is DEMO PAGE</h1>
 
-    <div id="Popup">
-        <h2>Popup</h2>
+    <details>
+        <summary><h2>Popup</h2></summary>
         <label>title: <input type="text" id="popupTitle" placeholder="test"></label><br>
         <label>body: <textarea id="popupBody" placeholder="this is a test"></textarea></label><br>
-        <label>title text color: <input type="text" id="titleTextColor" placeholder="#000"></label>
-        <label>body text color: <input type="text" id="bodyTextColor" placeholder="#000"></label><br>
-        <label>title background color: <input type="text" id="titleBackgroundColor" placeholder="#c4c4ff"></label>
-        <label>body background color: <input type="text" id="bodyBackgroundColor" placeholder="#fff"></label><br>
-        <label>title size: <input type="text" id="titleSize" placeholder="24px"></label>
-        <label>body size: <input type="text" id="bodySize" placeholder="16px"></label><br>
-        <label>body center-aligning: <input type="checkbox" id="bodyCenterAligning"></label><br>
-        <lavel>enter type:
-            <select id="enterTypeSelect">
+        <label>body is html? <input type="checkbox" id="isHtml"></label><br>
+        <label>title text color: <input type="text" id="popupTitleTextColor" placeholder="#000"></label>
+        <label>body text color: <input type="text" id="popupBodyTextColor" placeholder="#000"></label><br>
+        <label>title background color: <input type="text" id="popupTitleBackgroundColor" placeholder="#c4c4ff"></label>
+        <label>body background color: <input type="text" id="popupBodyBackgroundColor" placeholder="#fff"></label><br>
+        <label>title size: <input type="text" id="popupTitleSize" placeholder="24px"></label>
+        <label>body size: <input type="text" id="popupBodySize" placeholder="16px"></label><br>
+        <label>body center-aligning: <input type="checkbox" id="popupBodyCenterAligning"></label><br>
+        <label>enter type:
+            <select id="popupEnterTypeSelect">
                 <option value="0">0: Fade+Scale</option>
                 <option value="1">1: Slide from top</option>
                 <option value="2">2: Slide from bottom</option>
                 <option value="3">3: Slide from left</option>
                 <option value="4">4: Slide from right</option>
             </select>
-        </lavel>
+        </label>
         <label>leave type:
-            <select id="leaveTypeSelect">
+            <select id="popupLeaveTypeSelect">
                 <option value="">same as enter</option>
                 <option value="0">0: Fade+Scale</option>
                 <option value="1">1: Slide from top</option>
@@ -48,19 +52,46 @@
                 <option value="4">4: Slide from right</option>
             </select>
         </label><br>
-        <label>isConfirm: <input type="checkbox" id="isConfirm"></label><br>
-        <label>true text: <input type="text" id="trueText" placeholder="OK"></label>
-        <label>true text color: <input type="text" id="trueTextColor" placeholder="#fff"></label>
-        <label>true backgroundcolor: <input type="text" id="trueBackgroundColor" placeholder="#0078ff"></label><br>
-        <label>false text: <input type="text" id="falseText" placeholder="cancel"></label>
-        <label>false text color: <input type="text" id="falseTextColor" placeholder="#000"></label>
-        <label>false backgroundcolor: <input type="text" id="falseBackgroundColor" placeholder="#ccc"></label><br>
-        <label>onOpen function: <textarea id="onOpen" placeholder="el => {&#xA;console.log('opend', el);&#xA;}"></textarea></label><br>
-        <label>onClose function: <textarea id="onClose" placeholder="res => {&#xA;console.log('closed', res);&#xA;}"></textarea></label><br>
-        <label>onConfirm function: <textarea id="onConfirm" placeholder="() => {&#xA;console.log('trueBtn pressed');&#xA;}"></textarea></label><br>
-        <label>onCancel function: <textarea id="onCancel" placeholder="() => {&#xA;console.log('falseBtn pressed');&#xA;}"></textarea></label><br>
-        <button id="popup">popup</button>
-    </div>
+        <label>isConfirm: <input type="checkbox" id="popupIsConfirm"></label><br>
+        <label>true text: <input type="text" id="popupTrueText" placeholder="OK"></label>
+        <label>true text color: <input type="text" id="popupTrueTextColor" placeholder="#fff"></label>
+        <label>true backgroundcolor: <input type="text" id="popupTrueBackgroundColor" placeholder="#0078ff"></label><br>
+        <label>false text: <input type="text" id="popupFalseText" placeholder="cancel"></label>
+        <label>false text color: <input type="text" id="popupFalseTextColor" placeholder="#000"></label>
+        <label>false backgroundcolor: <input type="text" id="popupFalseBackgroundColor" placeholder="#ccc"></label><br>
+        <label>onOpen function: <textarea id="popupOnOpen" placeholder="el => {&#xA;console.log('opend', el);&#xA;}"></textarea></label><br>
+        <label>onClose function: <textarea id="popupOnClose" placeholder="res => {&#xA;console.log('closed', res);&#xA;}"></textarea></label><br>
+        <label>onConfirm function: <textarea id="popupOnConfirm" placeholder="() => {&#xA;console.log('trueBtn pressed');&#xA;}"></textarea></label><br>
+        <label>onCancel function: <textarea id="popupOnCancel" placeholder="() => {&#xA;console.log('falseBtn pressed');&#xA;}"></textarea></label><br>
+        <button id="popup">create popup</button>
+    </details>
+
+    <details>
+        <summary><h2>SnackBar</h2></summary>
+        <label>text: <input type="text" id="snackText" placeholder="this is a test"></label><br>
+        <label>text color: <input type="text" id="snackTextColor" placeholder="#fff"></label>
+        <label>backgroundcolor: <input type="text" id="snackBackgroundColor" placeholder="#000"></label><br>
+        <label>position
+            <label>vertical: <select id="snackVertical">
+                <option value="start" selected>start</option>
+                <option value="center">center</option>
+                <option value="end">end</option>
+            </select></label><br>
+            <label>horizontal: <select id="snackHorizontal">
+                <option value="start">start</option>
+                <option value="center">center</option>
+                <option value="end" selected>end</option>
+            </select></label><br>
+        </label>
+        <label>direction: <select id="snackDirection">
+            <option value="up">up</option>
+            <option value="down">down</option>
+            <option value="left">left</option>
+            <option value="right" selected>right</option>
+        </select></label><br>
+        <label>disapper time: <input type="number" id="snackDisappearTime" placeholder="10000" min="1">ms</label><br>
+        <button id="snackBar">create snackBar</button>
+    </details>
 
     <script type="module">
         import * as FIL from './script.js';
@@ -68,30 +99,31 @@
         $('#popup').on('click', async function () {
             const title = $('#popupTitle').val();
             const body = $('#popupBody').val();
-            let enterType = $('#enterTypeSelect').val();
+            let enterType = $('#popupEnterTypeSelect').val();
             enterType = parseInt(enterType);
-            let leaveType = $('#leaveTypeSelect').val();
+            let leaveType = $('#popupLeaveTypeSelect').val();
             if (leaveType === "") leaveType = enterType; // 空なら enterType と同じ
             else leaveType = parseInt(leaveType);
 
-            const titleTextColor = $('#titleTextColor').val() || undefined;
-            const bodyTextColor = $('#bodyTextColor').val() || undefined;
-            const titleBackgroundColor = $('#titleBackgroundColor').val() || undefined;
-            const bodyBackgroundColor = $('#bodyBackgroundColor').val() || undefined;
-            const titleSize = $('#titleSize').val() || undefined;
-            const bodySize = $('#bodySize').val() || undefined;
-            const bodyCenterAligning = $('#bodyCenterAligning').prop('checked');
-            const isConfirm = $('#isConfirm').prop('checked');
-            const trueText = $('#trueText').val() || undefined;
-            const trueTextColor = $('#trueTextColor').val() || undefined;
-            const trueBackgroundColor = $('#trueBackgroundColor').val() || undefined;
-            const falseText = $('#falseText').val() || undefined;
-            const falseTextColor = $('#falseTextColor').val() || undefined;
-            const falseBackgroundColor = $('#falseBackgroundColor').val() || undefined;
-            const onOpen = eval($('#onOpen').val());
-            const onClose = eval($('#onClose').val());
-            const onConfirm = eval($('#onConfirm').val());
-            const onCancel = eval($('#onCancel').val());
+            const isHtml = $('#popupIsHtml').prop('checked');
+            const titleTextColor = $('#popupTitleTextColor').val() || undefined;
+            const bodyTextColor = $('#popupBodyTextColor').val() || undefined;
+            const titleBackgroundColor = $('#popupTitleBackgroundColor').val() || undefined;
+            const bodyBackgroundColor = $('#popupBodyBackgroundColor').val() || undefined;
+            const titleSize = $('#popupTitleSize').val() || undefined;
+            const bodySize = $('#popupBodySize').val() || undefined;
+            const bodyCenterAligning = $('#popupBodyCenterAligning').prop('checked');
+            const isConfirm = $('#popupIsConfirm').prop('checked');
+            const trueText = $('#popupTrueText').val() || undefined;
+            const trueTextColor = $('#popupTrueTextColor').val() || undefined;
+            const trueBackgroundColor = $('#popupTrueBackgroundColor').val() || undefined;
+            const falseText = $('#popupFalseText').val() || undefined;
+            const falseTextColor = $('#popupFalseTextColor').val() || undefined;
+            const falseBackgroundColor = $('#popupFalseBackgroundColor').val() || undefined;
+            const onOpen = eval($('#popupOnOpen').val());
+            const onClose = eval($('#popupOnClose').val());
+            const onConfirm = eval($('#popupOnConfirm').val());
+            const onCancel = eval($('#popupOnCancel').val());
 
             console.log(
                 clean({
@@ -104,6 +136,7 @@
             console.log(
                 clean({
                     text: body,
+                    isHtml: isHtml,
                     centerAligning: bodyCenterAligning,
                     textColor: bodyTextColor,
                     backgroundColor: bodyBackgroundColor,
@@ -148,6 +181,7 @@
                 }),
                 clean({
                     text: body,
+                    isHtml: isHtml,
                     centerAligning: bodyCenterAligning,
                     backgroundColor: bodyBackgroundColor,
                     size: bodySize
@@ -233,6 +267,20 @@
 
             return cleaned;
         }
+
+
+        $('#snackBar').on('click', function() {
+            const text = $('#snackText').val() || undefined;
+            const textColor = $('#snackTextColor').val() || undefined;
+            const backgroundColor = $('#snackBackgroundColor').val() || undefined;
+            const vertical = $('#snackVertical').val();
+            const horizontal = $('#snackHorizontal').val();
+            const direction = $('#snackDirection').val();
+            const disapperTime = $('#snackDisappearTime').val() || undefined;
+
+            console.log(horizontal)
+            FIL.createSnackBar(text, textColor, backgroundColor, {vertical: vertical, horizontal: horizontal}, direction, disapperTime);
+        })
     </script>
 </body>
 
